@@ -22,13 +22,49 @@ describe("GET /", function () {
   });
 });
 
-// describe("post /", function () {
-//   test("", async function () {});
-// });
+describe("get/ibm", function () {
+  test("it returns one company info", async function () {
+    const response = await request(app).get("/companies/apple");
+    expect(response.body).toEqual({
+      company: {
+        code: "apple",
+        name: "Apple",
+        description: "Maker of OSX.",
+        invoices: [1, 2],
+      },
+    });
+  });
+});
 
-// describe("put /", function () {
-//   test("", async function () {});
-// });
+describe("POST /", function () {
+  test("should add compnay", async function () {
+    const response = await request(app)
+      .post("/copmanies")
+      .send({ name: "testy", description: "in depth reviews" });
+    expect(response.body).toEqual({
+      company: {
+        code: "testy",
+        name: "testy",
+        description: "in depth reviews",
+      },
+    });
+  });
+});
+
+describe("put /", function () {
+  test("it should update a company", async function () {
+    const response = await request(app)
+      .put("/companies/apple")
+      .send({ name: "new Apple", description: "brand new apple" });
+    expect(response.body).toEqual({
+      company: {
+        code: "apple",
+        name: "new Apple",
+        description: "brand new apple",
+      },
+    });
+  });
+});
 
 describe("Delete /", function () {
   test("it should delete compnay from db", async function () {
